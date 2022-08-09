@@ -5,25 +5,20 @@ import streamLogo from '../../assets/stream.png';
 
 import type { StreamChatGenerics } from '../../types';
 
-type Props = {
-  theme: string;
-};
 
-const MessagingChannelListHeader = React.memo((props: Props) => {
-  const { theme } = props;
-
+const MessagingChannelListHeader = () => {
   const { client } = useChatContext<StreamChatGenerics>();
 
-  const { id, image = streamLogo as string, name = 'Example User' } = client.user || {};
-
+  const user = client.user as any;
+  const userDisplayName = `${user.name} (${user.type})`
   return (
-    <div className={`${theme} messaging__channel-list`}>
-      <div className='messaging__channel-list__header'>
-        <Avatar image={image} name={name} size={40} />
-        <div className={`${theme} messaging__channel-list__header__name`}>{name || id}</div>
+    <div className="messaging__channel-list">
+      <div className="messaging__channel-list__header">
+        <Avatar image={user.image || streamLogo} name={userDisplayName} size={40} />
+        <div className="messaging__channel-list__header__name">{userDisplayName}</div>
       </div>
     </div>
   );
-});
+};
 
 export default React.memo(MessagingChannelListHeader);

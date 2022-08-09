@@ -16,11 +16,10 @@ import type { StreamChatGenerics } from '../../types';
 
 export type ChannelInnerProps = {
   toggleMobile: () => void;
-  theme: string;
 };
 
 export const ChannelInner = (props: ChannelInnerProps) => {
-  const { theme, toggleMobile } = props;
+  const { toggleMobile } = props;
   const { giphyState, setGiphyState } = useGiphyContext();
 
   const { sendMessage } = useChannelActionContext<StreamChatGenerics>();
@@ -66,7 +65,7 @@ export const ChannelInner = (props: ChannelInnerProps) => {
   return (
     <>
       <Window>
-        <MessagingChannelHeader theme={theme} toggleMobile={toggleMobile} />
+        <MessagingChannelHeader toggleMobile={toggleMobile} />
         <MessageList messageActions={actions} />
         <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
       </Window>

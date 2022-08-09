@@ -9,12 +9,11 @@ import { AvatarGroup } from '../';
 import type { StreamChatGenerics } from '../../types';
 
 type Props = {
-  theme: string;
   toggleMobile: () => void;
 };
 
 const MessagingChannelHeader = (props: Props) => {
-  const { theme, toggleMobile } = props;
+  const { toggleMobile } = props;
   const { client } = useChatContext<StreamChatGenerics>();
   const { channel } = useChannelStateContext<StreamChatGenerics>();
   const [channelName, setChannelName] = useState(channel.data?.name || '');
@@ -73,7 +72,7 @@ const MessagingChannelHeader = (props: Props) => {
 
   return (
     <div className='messaging__channel-header'>
-      <div id='mobile-nav-icon' className={`${theme}`} onClick={() => toggleMobile()}>
+      <div id='mobile-nav-icon' onClick={() => toggleMobile()}>
         <HamburgerIcon />
       </div>
       <AvatarGroup members={members} />

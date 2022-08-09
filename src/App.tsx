@@ -1,4 +1,4 @@
-import { Chat, Channel, ChannelList } from 'stream-chat-react';
+import { Channel, ChannelList, useChatContext } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import './App.css';
@@ -11,49 +11,36 @@ import {
 } from './components';
 
 import { ChannelInner } from './components/ChannelInner/ChannelInner';
-import { useConnectUser } from './hooks/useConnectUser';
-import { useTheme } from './hooks/useTheme';
 import { useChecklist } from './hooks/useChecklist';
 import { useUpdateAppHeightOnResize } from './hooks/useUpdateAppHeightOnResize';
 import { useMobileView } from './hooks/useMobileView';
 import { GiphyContextProvider } from './Giphy';
-import type { StreamChatGenerics } from './types';
-import type {ReactNode} from 'react';
 
 type AppProps = {
-  apiKey: string;
-  userToConnect: { id: string; name?: string; image?: string };
   targetOrigin: string;
 };
 
 const App = (props: AppProps) => {
-  const { apiKey, userToConnect, targetOrigin } = props;
-  const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect);
+  const { targetOrigin } = props;
   const toggleMobile = useMobileView();
-  const theme = useTheme(targetOrigin);
-
-  useChecklist(chatClient, targetOrigin);
+  const { client, setActiveChannel } = useChatContext();
+  useChecklist(client, targetOrigin);
   useUpdateAppHeightOnResize();
 
-
-  if (!chatClient) {
-    return null; // render nothing until connection to the backend is established
-  }
-
   return (
-    <Chat client={chatClient} theme={`messaging ${theme}`}>
+    <>
       <div className='messaging__sidebar' id='mobile-channel-list' onClick={toggleMobile}>
-        <MessagingChannelListHeader theme={theme} />
+        <MessagingChannelListHeader />
         <ChannelList
-          filters={{ members: { $in: [userToConnect.id] }}}
+          filters={{ members: { $in: [client.user!.id] }}}
           options={{ state: true, watch: true, presence: true, limit: 8 }}
           sort={{ last_message_at: -1, updated_at: -1 }}
           Preview={(props) => {
             const otherMember = Object.values(props.channel.state.members)
-              .find(m => m?.user_id !== userToConnect.id)
+              .find(m => m?.user_id !== client.user!.id)
             const user = otherMember?.user as any
 
-            return <p>{user.name} ({user.type})</p>
+            return <p onClick={() => setActiveChannel(props.channel)}>{user.name} ({user.type})</p>
           }}
         />
       </div>
@@ -67,11 +54,11 @@ const App = (props: AppProps) => {
           TypingIndicator={() => null}
         >
           <GiphyContextProvider>
-            <ChannelInner theme={theme} toggleMobile={toggleMobile} />
+            <ChannelInner toggleMobile={toggleMobile} />
           </GiphyContextProvider>
         </Channel>
       </div>
-    </Chat>
+    </>
   );
 };
 
