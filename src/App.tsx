@@ -38,7 +38,6 @@ type AppProps = {
 
 const App = (props: AppProps) => {
   const { apiKey, userToConnect, userToken, targetOrigin, channelListOptions } = props;
-  const [isCreating, setIsCreating] = useState(false);
 
   const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect, userToken);
   const toggleMobile = useMobileView();
@@ -56,16 +55,13 @@ const App = (props: AppProps) => {
   return (
     <Chat client={chatClient} theme={`messaging ${theme}`}>
       <div className='messaging__sidebar' id='mobile-channel-list' onClick={toggleMobile}>
-        <MessagingChannelListHeader
-          onCreateChannel={() => setIsCreating(!isCreating)}
-          theme={theme}
-        />
+        <MessagingChannelListHeader theme={theme} />
         <ChannelList
           filters={channelListOptions.filters}
           sort={channelListOptions.sort}
           options={channelListOptions.options}
           List={MessagingChannelList}
-          Preview={(props) => <MessagingChannelPreview {...props} setIsCreating={setIsCreating} />}
+          // Preview={MessagingChannelPreview}
         />
       </div>
       <div>
@@ -77,9 +73,6 @@ const App = (props: AppProps) => {
           ThreadHeader={MessagingThreadHeader}
           TypingIndicator={() => null}
         >
-          {isCreating && (
-            <CreateChannel toggleMobile={toggleMobile} onClose={() => setIsCreating(false)} />
-          )}
           <GiphyContextProvider>
             <ChannelInner theme={theme} toggleMobile={toggleMobile} />
           </GiphyContextProvider>
