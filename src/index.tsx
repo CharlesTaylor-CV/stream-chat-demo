@@ -4,7 +4,6 @@ import './index.css';
 
 import App from './App';
 import { getImage } from './assets';
-import { getChannelListOptions } from './channelListOptions';
 
 const apiKey = process.env.REACT_APP_STREAM_KEY;
 const urlParams = new URLSearchParams(window.location.search);
@@ -15,7 +14,6 @@ const targetOrigin = urlParams.get('target_origin');
 const noChannelNameFilter = urlParams.get('no_channel_name_filter') || false;
 const skipNameImageSet = urlParams.get('skip_name_image_set') || false;
 
-const channelListOptions = getChannelListOptions(!!noChannelNameFilter, user);
 const userToConnect: { id: string; name?: string; image?: string } = {
   id: user!,
   name: skipNameImageSet ? undefined : user!,
@@ -31,7 +29,6 @@ root.render(
       userToConnect={userToConnect}
       userToken={userToken}
       targetOrigin={targetOrigin!}
-      channelListOptions={channelListOptions}
     />
   </React.StrictMode>,
 );

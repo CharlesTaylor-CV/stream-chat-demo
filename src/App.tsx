@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import type { ChannelFilters, ChannelOptions, ChannelSort } from 'stream-chat';
 import { Chat, Channel, ChannelList } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import './App.css';
 
 import {
-  CreateChannel,
   CustomMessage,
   MessagingChannelList,
   MessagingChannelListHeader,
-  MessagingChannelPreview,
   MessagingInput,
   MessagingThreadHeader,
 } from './components';
@@ -32,7 +28,7 @@ type AppProps = {
 };
 
 const App = (props: AppProps) => {
-  const { apiKey, userToConnect, userToken, targetOrigin, userToConnect } = props;
+  const { apiKey, userToConnect, userToken, targetOrigin } = props;
 
   const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect, userToken);
   const toggleMobile = useMobileView();
