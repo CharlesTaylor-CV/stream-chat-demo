@@ -29,15 +29,10 @@ type AppProps = {
   userToConnect: { id: string; name?: string; image?: string };
   userToken: string | undefined;
   targetOrigin: string;
-  channelListOptions: {
-    options: ChannelOptions;
-    filters: ChannelFilters;
-    sort: ChannelSort;
-  };
 };
 
 const App = (props: AppProps) => {
-  const { apiKey, userToConnect, userToken, targetOrigin, channelListOptions } = props;
+  const { apiKey, userToConnect, userToken, targetOrigin, userToConnect } = props;
 
   const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect, userToken);
   const toggleMobile = useMobileView();
@@ -51,17 +46,15 @@ const App = (props: AppProps) => {
     return null; // render nothing until connection to the backend is established
   }
 
-
   return (
     <Chat client={chatClient} theme={`messaging ${theme}`}>
       <div className='messaging__sidebar' id='mobile-channel-list' onClick={toggleMobile}>
         <MessagingChannelListHeader theme={theme} />
         <ChannelList
-          filters={channelListOptions.filters}
-          sort={channelListOptions.sort}
-          options={channelListOptions.options}
+          filters={{ members: { $in: [userToConnect.id] }}}
+          options={{ state: true, watch: true, presence: true, limit: 8 }}
+          sort={{ last_message_at: -1, updated_at: -1 }}
           List={MessagingChannelList}
-          // Preview={MessagingChannelPreview}
         />
       </div>
       <div>
