@@ -1,4 +1,4 @@
-import { Chat, Channel, ChannelList } from 'stream-chat-react';
+import { Chat, Channel, ChannelList, useChatContext } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import './App.css';
@@ -23,14 +23,12 @@ import type { StreamChatGenerics } from './types';
 type AppProps = {
   apiKey: string;
   userToConnect: { id: string; name?: string; image?: string };
-  userToken: string | undefined;
   targetOrigin: string;
 };
 
 const App = (props: AppProps) => {
-  const { apiKey, userToConnect, userToken, targetOrigin } = props;
-
-  const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect, userToken);
+  const { apiKey, userToConnect, targetOrigin } = props;
+  const chatClient = useConnectUser<StreamChatGenerics>(apiKey, userToConnect);
   const toggleMobile = useMobileView();
   const theme = useTheme(targetOrigin);
 

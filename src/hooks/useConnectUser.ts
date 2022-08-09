@@ -4,7 +4,6 @@ import {
   ExtendableGenerics,
   OwnUserResponse,
   StreamChat,
-  TokenOrProvider,
   UserResponse,
 } from 'stream-chat';
 
@@ -14,12 +13,10 @@ import {
  *
  * @param apiKey the Stream app API key to use.
  * @param userToConnect the user information.
- * @param userTokenOrProvider the user's token.
  */
 export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>(
   apiKey: string,
   userToConnect: OwnUserResponse<SCG> | UserResponse<SCG>,
-  userTokenOrProvider: TokenOrProvider,
 ) => {
   const [chatClient, setChatClient] = useState<StreamChat<SCG> | null>(null);
   useEffect(() => {
@@ -28,13 +25,15 @@ export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>
       enableWSFallback: true,
     });
 
+    const userToken = client.devToken(userToConnect.id)
+
     // Under some circumstances, a "connectUser" operation might be interrupted
     // (fast user switching, react strict-mode in dev). With this flag, we control
     // whether a "disconnectUser" operation has been requested before we
     // provide a new StreamChat instance to the consumers of this hook.
     let didUserConnectInterrupt = false;
     const connectUser = client
-      .connectUser(userToConnect, userTokenOrProvider)
+      .connectUser(userToConnect, userToken)
       .catch((e) => {
         console.error(`Failed to connect user`, e);
       })
@@ -55,7 +54,7 @@ export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>
         });
       });
     };
-  }, [apiKey, userTokenOrProvider, userToConnect]);
+  }, [apiKey, userToConnect]);
 
   return chatClient;
 };

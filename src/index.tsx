@@ -7,17 +7,14 @@ import { getImage } from './assets';
 
 const apiKey = process.env.REACT_APP_STREAM_KEY;
 const urlParams = new URLSearchParams(window.location.search);
-const user = urlParams.get('user') || process.env.REACT_APP_USER_ID;
-const userToken = urlParams.get('user_token') || process.env.REACT_APP_USER_JWT;
+const userId = urlParams.get('user_id');
 const targetOrigin = urlParams.get('target_origin');
-
-const noChannelNameFilter = urlParams.get('no_channel_name_filter') || false;
 const skipNameImageSet = urlParams.get('skip_name_image_set') || false;
 
 const userToConnect: { id: string; name?: string; image?: string } = {
-  id: user!,
-  name: skipNameImageSet ? undefined : user!,
-  image: skipNameImageSet ? undefined : getImage(user!),
+  id: userId!,
+  name: skipNameImageSet ? undefined : userId!,
+  image: skipNameImageSet ? undefined : getImage(userId!),
 };
 
 const container = document.getElementById('root');
@@ -27,7 +24,6 @@ root.render(
     <App
       apiKey={apiKey!}
       userToConnect={userToConnect}
-      userToken={userToken}
       targetOrigin={targetOrigin!}
     />
   </React.StrictMode>,
