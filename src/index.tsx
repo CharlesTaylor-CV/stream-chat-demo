@@ -7,7 +7,7 @@ import { getImage } from './assets';
 
 const apiKey = process.env.REACT_APP_STREAM_KEY;
 const urlParams = new URLSearchParams(window.location.search);
-const userId = urlParams.get('user_id');
+const userId = urlParams.get('user_id') || '1';
 const targetOrigin = urlParams.get('target_origin');
 const skipNameImageSet = urlParams.get('skip_name_image_set') || false;
 

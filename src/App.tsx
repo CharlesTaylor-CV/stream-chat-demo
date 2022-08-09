@@ -1,11 +1,10 @@
-import { Chat, Channel, ChannelList, useChatContext } from 'stream-chat-react';
+import { Chat, Channel, ChannelList } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import './App.css';
 
 import {
   CustomMessage,
-  MessagingChannelList,
   MessagingChannelListHeader,
   MessagingInput,
   MessagingThreadHeader,
@@ -19,6 +18,7 @@ import { useUpdateAppHeightOnResize } from './hooks/useUpdateAppHeightOnResize';
 import { useMobileView } from './hooks/useMobileView';
 import { GiphyContextProvider } from './Giphy';
 import type { StreamChatGenerics } from './types';
+import type {ReactNode} from 'react';
 
 type AppProps = {
   apiKey: string;
@@ -48,7 +48,13 @@ const App = (props: AppProps) => {
           filters={{ members: { $in: [userToConnect.id] }}}
           options={{ state: true, watch: true, presence: true, limit: 8 }}
           sort={{ last_message_at: -1, updated_at: -1 }}
-          List={MessagingChannelList}
+          Preview={(props) => {
+            const otherMember = Object.values(props.channel.state.members)
+              .find(m => m?.user_id !== userToConnect.id)
+            const user = otherMember?.user as any
+
+            return <p>{user.name} ({user.type})</p>
+          }}
         />
       </div>
       <div>
