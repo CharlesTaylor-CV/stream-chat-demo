@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ChannelFilters, ChannelOptions, ChannelSort } from 'stream-chat';
 import { Chat, Channel, ChannelList } from 'stream-chat-react';
 
@@ -47,9 +47,11 @@ const App = (props: AppProps) => {
   useChecklist(chatClient, targetOrigin);
   useUpdateAppHeightOnResize();
 
+
   if (!chatClient) {
     return null; // render nothing until connection to the backend is established
   }
+
 
   return (
     <Chat client={chatClient} theme={`messaging ${theme}`}>
