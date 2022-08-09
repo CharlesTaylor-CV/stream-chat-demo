@@ -1,4 +1,4 @@
-import { Channel, ChannelList, useChatContext } from 'stream-chat-react';
+import { Channel, ChannelList, ChannelPreviewMessenger, useChatContext } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import './App.css';
@@ -23,7 +23,8 @@ type AppProps = {
 const App = (props: AppProps) => {
   const { targetOrigin } = props;
   const toggleMobile = useMobileView();
-  const { client, setActiveChannel } = useChatContext();
+  const { client } = useChatContext();
+
   useChecklist(client, targetOrigin);
   useUpdateAppHeightOnResize();
 
@@ -39,8 +40,9 @@ const App = (props: AppProps) => {
             const otherMember = Object.values(props.channel.state.members)
               .find(m => m?.user_id !== client.user!.id)
             const user = otherMember?.user as any
-
-            return <p onClick={() => setActiveChannel(props.channel)}>{user.name} ({user.type})</p>
+            return (
+              <ChannelPreviewMessenger {...props} displayTitle={`${user.name} (${user.type})`} />
+            )
           }}
         />
       </div>

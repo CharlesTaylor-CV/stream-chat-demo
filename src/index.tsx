@@ -14,9 +14,8 @@ const userId = urlParams.get('user_id') || '1';
 const targetOrigin = urlParams.get('target_origin');
 const skipNameImageSet = urlParams.get('skip_name_image_set') || false;
 
-const userToConnect: { id: string; name?: string; image?: string } = {
+const userToConnect: { id: string; image?: string } = {
   id: userId!,
-  name: skipNameImageSet ? undefined : userId!,
   image: skipNameImageSet ? undefined : getImage(userId!),
 };
 
