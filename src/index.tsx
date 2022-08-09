@@ -9,8 +9,8 @@ import { getChannelListOptions } from './channelListOptions';
 const apiKey = process.env.REACT_APP_STREAM_KEY;
 const urlParams = new URLSearchParams(window.location.search);
 const user = urlParams.get('user') || process.env.REACT_APP_USER_ID;
-const userToken = urlParams.get('user_token') || process.env.REACT_APP_USER_TOKEN;
-const targetOrigin = urlParams.get('target_origin') || process.env.REACT_APP_TARGET_ORIGIN;
+const userToken = urlParams.get('user_token') || process.env.REACT_APP_USER_JWT;
+const targetOrigin = urlParams.get('target_origin');
 
 const noChannelNameFilter = urlParams.get('no_channel_name_filter') || false;
 const skipNameImageSet = urlParams.get('skip_name_image_set') || false;
