@@ -23,7 +23,7 @@ const App = () => {
   useUpdateAppHeightOnResize();
 
   return (
-    <>
+    <div className="dark">
       <div className='messaging__sidebar' id='mobile-channel-list' onClick={toggleMobile}>
         <MessagingChannelListHeader />
         <ChannelList
@@ -54,7 +54,7 @@ const App = () => {
           </GiphyContextProvider>
         </Channel>
       </div>
-    </>
+    </div>
   );
 };
 

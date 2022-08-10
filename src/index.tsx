@@ -21,7 +21,7 @@ function ChatApp() {
   const client = useConnectUser<StreamChatGenerics>(apiKey!, user);
   if (!client) return null
   return (
-    <Chat client={client!} theme="messaging light">
+    <Chat client={client!} theme="messaging dark">
       <App />
     </Chat>
   )
