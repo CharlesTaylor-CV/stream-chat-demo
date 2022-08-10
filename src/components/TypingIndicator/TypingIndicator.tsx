@@ -4,7 +4,6 @@ import type { StreamChatGenerics } from '../../types';
 
 export const TypingIndicator = () => {
   const { client } = useChatContext<StreamChatGenerics>();
-
   const { typing } = useTypingContext<StreamChatGenerics>();
 
   if (!client || !typing) return null;
