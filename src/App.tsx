@@ -1,6 +1,7 @@
 import { Channel, ChannelList, ChannelPreviewMessenger, useChatContext } from 'stream-chat-react';
 
 import '@stream-io/stream-chat-css/dist/css/index.css';
+import './index.css';
 
 import {
   CustomMessage,
