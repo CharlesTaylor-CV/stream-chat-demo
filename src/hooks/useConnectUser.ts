@@ -12,20 +12,20 @@ import {
  * to the Stream Chat backend.
  *
  * @param apiKey the Stream app API key to use.
- * @param userToConnect the user information.
+ * @param user
  */
 export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>(
   apiKey: string,
-  userToConnect: OwnUserResponse<SCG> | UserResponse<SCG>,
+  user: OwnUserResponse<SCG> | UserResponse<SCG>,
 ) => {
-  const [chatClient, setChatClient] = useState<StreamChat<SCG> | null>(null);
+  const [client, setClient] = useState<StreamChat<SCG> | null>(null);
   useEffect(() => {
     const client = new StreamChat<SCG>(apiKey, {
       enableInsights: true,
       enableWSFallback: true,
     });
 
-    const userToken = client.devToken(userToConnect.id)
+    const userToken = client.devToken(user.id)
 
     // Under some circumstances, a "connectUser" operation might be interrupted
     // (fast user switching, react strict-mode in dev). With this flag, we control
@@ -33,13 +33,13 @@ export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>
     // provide a new StreamChat instance to the consumers of this hook.
     let didUserConnectInterrupt = false;
     const connectUser = client
-      .connectUser(userToConnect, userToken)
+      .connectUser(user, userToken)
       .catch((e) => {
         console.error(`Failed to connect user`, e);
       })
       .then(() => {
         if (!didUserConnectInterrupt) {
-          setChatClient(client);
+          setClient(client);
         }
       });
 
@@ -48,13 +48,13 @@ export const useConnectUser = <SCG extends ExtendableGenerics = DefaultGenerics>
       // there might be a pending "connectUser" operation, wait for it to finish
       // before executing the "disconnectUser" in order to prevent race-conditions.
       connectUser.then(() => {
-        setChatClient(null);
+        setClient(null);
         client.disconnectUser().catch((e) => {
           console.error(`Failed to disconnect user`, e);
         });
       });
     };
-  }, [apiKey, userToConnect]);
+  }, [apiKey, user]);
 
-  return chatClient;
+  return client;
 };
