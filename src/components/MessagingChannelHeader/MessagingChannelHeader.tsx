@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useChannelStateContext, useChatContext } from 'stream-chat-react';
-import './MessagingChannelHeader.css';
 
 import { TypingIndicator } from '../TypingIndicator/TypingIndicator';
 import { ChannelInfoIcon, ChannelSaveIcon, HamburgerIcon } from '../../assets';

@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { ChannelListMessengerProps, useChatContext } from 'stream-chat-react';
 
-import './MessagingChannelList.css';
 import { SkeletonLoader } from './SkeletonLoader';
 
 import type { StreamChat } from 'stream-chat';

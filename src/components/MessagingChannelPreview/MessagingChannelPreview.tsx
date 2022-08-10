@@ -1,4 +1,3 @@
-import './MessagingChannelPreview.css';
 import {
   ChannelPreviewUIComponentProps,
   ChatContextValue,

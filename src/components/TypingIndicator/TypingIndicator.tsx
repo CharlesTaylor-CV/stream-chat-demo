@@ -1,7 +1,5 @@
 import { useChatContext, useTypingContext } from 'stream-chat-react';
 
-import './TypingIndicator.css';
-
 import type { StreamChatGenerics } from '../../types';
 
 export const TypingIndicator = () => {

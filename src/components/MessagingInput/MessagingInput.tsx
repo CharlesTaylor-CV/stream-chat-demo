@@ -8,8 +8,6 @@ import {
   useMessageInputContext,
 } from 'stream-chat-react';
 
-import './MessagingInput.css';
-
 import { EmojiIcon, LightningBoltSmall, SendIcon } from '../../assets';
 
 import type { StreamChatGenerics } from '../../types';

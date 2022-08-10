@@ -5,8 +5,6 @@ import _debounce from 'lodash.debounce';
 
 import { XButton, XButtonBackground } from '../../assets';
 
-import './CreateChannel.css';
-
 import type { StreamChatGenerics } from '../../types';
 
 const UserResult = ({ user }: { user: UserResponse<StreamChatGenerics> }) => (

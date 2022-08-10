@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 
-import './WindowControls.css';
-
 type Props = {
   theme: string;
   setTheme: (theme: string) => void;
