@@ -11,21 +11,15 @@ import {
 } from './components';
 
 import { ChannelInner } from './components/ChannelInner/ChannelInner';
-import { useChecklist } from './hooks/useChecklist';
 import { useUpdateAppHeightOnResize } from './hooks/useUpdateAppHeightOnResize';
 import { useMobileView } from './hooks/useMobileView';
 import { GiphyContextProvider } from './Giphy';
 
-type AppProps = {
-  targetOrigin: string;
-};
 
-const App = (props: AppProps) => {
-  const { targetOrigin } = props;
+const App = () => {
   const toggleMobile = useMobileView();
   const { client } = useChatContext();
 
-  useChecklist(client, targetOrigin);
   useUpdateAppHeightOnResize();
 
   return (
