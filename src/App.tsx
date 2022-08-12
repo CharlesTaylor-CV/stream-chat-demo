@@ -6,7 +6,6 @@ import './index.css';
 import {
   CustomMessage,
   MessagingChannelListHeader,
-  MessagingInput,
   MessagingThreadHeader,
 } from './components';
 
@@ -42,12 +41,10 @@ const App = () => {
       </div>
       <div>
         <Channel
-          Input={MessagingInput}
           maxNumberOfFiles={10}
           Message={CustomMessage}
           multipleUploads={true}
           ThreadHeader={MessagingThreadHeader}
-          TypingIndicator={() => null}
         >
           <GiphyContextProvider>
             <ChannelInner toggleMobile={toggleMobile} />

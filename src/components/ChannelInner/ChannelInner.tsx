@@ -1,4 +1,3 @@
-import React from 'react';
 import { logChatPromiseExecution } from 'stream-chat';
 import {
   MessageList,
@@ -8,7 +7,7 @@ import {
   Thread,
 } from 'stream-chat-react';
 
-import { MessagingChannelHeader, MessagingInput } from '../../components';
+import { MessagingChannelHeader } from '../../components';
 import { useGiphyContext } from '../../Giphy';
 
 import type { MessageToSend } from 'stream-chat-react';
@@ -69,7 +68,7 @@ export const ChannelInner = (props: ChannelInnerProps) => {
         <MessageList messageActions={actions} />
         <MessageInput focus overrideSubmitHandler={overrideSubmitHandler} />
       </Window>
-      <Thread Input={MessagingInput} />
+      <Thread/>
     </>
   );
 };
